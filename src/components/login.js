@@ -10,6 +10,8 @@ const Login = () => {
     const [loginPassword, setLoginPassword] = useState('');
     const [emailCreated, setEmailCreated] = useState('');
     const [passwordCreated, setPasswordCreated] = useState('');
+    const [error, setError] = useState('');
+    const [errorCreation, setErrorCreation] = useState('');
 
     // on récupère setToken et setId du hook custom du context pour lui passer le token généré et utilisateur associé
     const {setToken, setId, setIsAdmin} = useToken();
@@ -21,11 +23,18 @@ const Login = () => {
             password: loginPassword
           })
           .then(function (response) {
-            setLoginEmail('');
-            setLoginPassword('');
-            setToken(response.data.token);
-            setId(response.data.id);
-            setIsAdmin(response.data.isAdmin);
+              if(typeof response.data === 'string') {
+                setError(response.data);
+                setLoginEmail('');
+                setLoginPassword('');
+              } else {
+                setToken(response.data.token);
+                setId(response.data.id);
+                setIsAdmin(response.data.isAdmin);
+                setLoginEmail('');
+                setLoginPassword('');
+              }
+            
           })
           .catch(function (error) {
             console.log(error);
@@ -39,11 +48,17 @@ const Login = () => {
             password: passwordCreated
           })
           .then(function (response) {
-            setToken(response.data.token);
-            setId(response.data.id);
-            setIsAdmin(response.data.isAdmin);
-            emailCreated('');
-            setPasswordCreated('');
+            if(typeof response.data === 'string') {
+                setErrorCreation(response.data);
+                emailCreated('');
+                setPasswordCreated('');
+              } else {
+                setToken(response.data.token);
+                setId(response.data.id);
+                setIsAdmin(response.data.isAdmin);
+                emailCreated('');
+                setPasswordCreated('');
+              }
           })
           .catch(function (error) {
             console.log(error);
@@ -61,6 +76,8 @@ const Login = () => {
                             <input className='text-white input-width' type="text" name="email" placeholder="exemple@exemple.fr" value={loginEmail} onChange={event => setLoginEmail(event.target.value)}/>
                         </div>
 
+                        <p style={{color: 'red'}}>{error ? error : ''}</p>
+
                         <div className='label-container'>
                             <label className='text-white'>Mot de passe :</label>
                             <input className='text-white input-width' type="text" name="password" value={loginPassword} onChange={event => setLoginPassword(event.target.value)}/>
@@ -77,6 +94,7 @@ const Login = () => {
                             <label className='text-white'>Email :</label>
                             <input className='text-white input-width' type="text" name="email_created" placeholder="exemple@exemple.fr" value ={emailCreated} onChange={event => setEmailCreated(event.target.value)}/>
                         </div>
+                        <p style={{color: 'red'}}>{errorCreation ? errorCreation : ''}</p>
                         <div className='label-container'>
                             <label className='text-white'>Mot de passe :</label>
                             <input className='text-white input-width' type="text" name="password_created" value ={passwordCreated} onChange={event => setPasswordCreated(event.target.value)}/>

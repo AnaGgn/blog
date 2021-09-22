@@ -57,7 +57,7 @@ const Home = () => {
         getLastArticles();
         getAllArticles();
          
-      }, []); //lastArticles, allArticles
+      }, [lastArticles, allArticles]); 
 
     const disconnect = () => {
         setToken(null);
@@ -137,7 +137,7 @@ const Home = () => {
         
         <div className='container-home'>
             <div className='header-container'>
-                <h1 style={{color: 'white'}}>Bienvenu sur mon blog! </h1>
+                <h1 style={{color: 'white'}}>Bienvenue sur mon blog! </h1>
                 <button onClick={disconnect} style={{backgroundColor: 'rgb(18, 18, 100)', color: 'white', border: 0, height: '30px', width: '120px'}}>Deconnexion</button>
             </div>
 
@@ -149,7 +149,7 @@ const Home = () => {
                             <div className='card'>
                                 <h3 className='text-style'>{a.title}</h3>
                                 <div className='info-container'>
-                                    <p className='text-style font-info'>auteur : {a.user}</p>
+                                    <p className='text-style font-info'>auteur : {a.user ? a.user : 'anonyme'}</p>
                                     <p className='text-style font-info'>posté le : {format(parseISO(a.created_at),'dd/MM/yyyy')}</p>
                                 </div>
                                 <h4 className='text-style'> {a.description}</h4>
@@ -198,25 +198,25 @@ const Home = () => {
 
             {
                 isAdmin && showForm === true ? (
-                    <>
+                    <div className='a-form-container'>
                         <form className='form-article'>
                             <div className='label-container'>
-                                <label>titre :</label>
-                                <input type="text" name="title" value ={title} onChange={event => setTitle(event.target.value)}/>
+                                <label className='text-white'>titre :</label>
+                                <input className='text-white input-width' type="text" name="title" value ={title} onChange={event => setTitle(event.target.value)}/>
                             </div>
 
                             <div className='label-container'>
-                                <label> Description : </label>
-                                <input type="text" name="description" value ={description} onChange={event => setDescription(event.target.value)}/>
+                                <label className='text-white'>Description : </label>
+                                <input className='text-white input-width' type="text" name="description" value ={description} onChange={event => setDescription(event.target.value)}/>
                             </div>
 
                             <div className='label-container'>
-                                <label> Contenu :</label>
-                                <input type="textarea" name="content" value ={content} onChange={event => setContent(event.target.value)}/>
+                                <label className='text-white'>Contenu :</label>
+                                <input className='text-white input-width' type="textarea" name="content" value ={content} onChange={event => setContent(event.target.value)}/>
                             </div>
                         </form>
-                        <button style={{backgroundColor: 'rgb(18, 18, 100)', color: 'white', border: 0, height: '30px', width: '120px', fontSize: '15px'}} onClick={() => {onPostArticle()}}>Valider</button>
-                    </>
+                        <button style={{backgroundColor: 'rgb(18, 18, 100)', color: 'white', border: 0, height: '30px', width: '120px', fontSize: '15px', alignSelf: 'flex-end'}} onClick={() => {onPostArticle()}}>Valider</button>
+                    </div>
                 ) : (
                     <></>
                 )
