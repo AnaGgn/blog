@@ -1,8 +1,10 @@
-# Prérequis
+# Documentation: Mon blog
+
+## Prérequis
 
 Avoir npm et postgres d'installé
 
-## Installation et mise en place
+### Installation et mise en place
 
 $ git clone https://github.com/AnaGgn/blog.git <br/>
 $ cd blog <br/>
