@@ -16,5 +16,13 @@ CREATE TABLE articles (
     description TEXT NOT NULL,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    id_user INT REFERENCES users (id) NOT NULL
+    id_user INT REFERENCES users (id) NULL
 );
+
+INSERT INTO articles (title, description, content)
+VALUES ('Mon premier article', 'Une brève description', 'un contenu un peu plus conséquent'),
+('Mon second article', 'Une brève description', 'un contenu un peu plus conséquent'),
+('Mon troisième article', 'Une brève description', 'un contenu un peu plus conséquent'),
+('Mon quatrième article', 'Une brève description', 'un contenu un peu plus conséquent'),
+('Mon cinquième article', 'Une brève description', 'un contenu un peu plus conséquent'),
+('Mon sixième article', 'Une brève description', 'un contenu un peu plus conséquent');
