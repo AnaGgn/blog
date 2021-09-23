@@ -14,6 +14,7 @@ const Home = () => {
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [edit, setEdit] = useState(false);
+    const [articleId, setArticleId] = useState();
 
     useEffect(() => {
 
@@ -83,9 +84,10 @@ const Home = () => {
         setContent(art.content);
         setShowForm(true);
         setEdit(true);
+        setArticleId(art.id);
     }
 
-    const onPostArticle =  () => {
+    const onPostArticle =  (article_id) => {
 
         let config = {
             headers: {
@@ -101,7 +103,7 @@ const Home = () => {
         }
 
         if(edit) {
-            axios.put(`http://localhost:3001/articles/${id}`, datas, config)
+            axios.put(`http://localhost:3001/articles/${article_id}`, datas, config)
             .then(function (response) {
                 console.log(response);
                 setTitle('');
@@ -214,7 +216,7 @@ const Home = () => {
                                 <input className='text-white input-width' type="textarea" name="content" value ={content} onChange={event => setContent(event.target.value)}/>
                             </div>
                         </form>
-                        <button style={{backgroundColor: 'rgb(18, 18, 100)', color: 'white', border: 0, height: '30px', width: '120px', fontSize: '15px', alignSelf: 'flex-end'}} onClick={() => {onPostArticle()}}>Valider</button>
+                        <button style={{backgroundColor: 'rgb(18, 18, 100)', color: 'white', border: 0, height: '30px', width: '120px', fontSize: '15px', alignSelf: 'flex-end'}} onClick={() => {onPostArticle(articleId)}}>Valider</button>
                     </div>
                 ) : (
                     <></>
