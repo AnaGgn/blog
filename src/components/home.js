@@ -15,49 +15,48 @@ const Home = () => {
     const [content, setContent] = useState('');
     const [edit, setEdit] = useState(false);
 
-
-    const getLastArticles = () => 
-    {
-        let config = {
-            headers: {
-              'Authorization': 'Bearer ' + token
-            }
-        }
-        axios.get('http://localhost:3001/home', config)
-          .then(function (response) {
-              console.log('response: ', response.data);
-              setLastArticles(response.data);
-
-          })
-          .catch(function (error) {
-            console.log(error);
-        });
-    }
-
-    const getAllArticles = () => 
-    {
-        let config = {
-            headers: {
-              'Authorization': 'Bearer ' + token
-            }
-        }
-        axios.get('http://localhost:3001/articles', config)
-          .then(function (response) {
-              console.log('response: ', response.data);
-              setAllArticles(response.data);
-
-          })
-          .catch(function (error) {
-            console.log(error);
-        });
-    }
-
     useEffect(() => {
 
-        getLastArticles();
-        getAllArticles();
+        const getLastArticles = async () => {
+            let config = {
+                headers: {
+                  'Authorization': 'Bearer ' + token
+                }
+            }
+            await axios.get('http://localhost:3001/home', config)
+              .then(function (response) {
+                setLastArticles(response.data);
+              })
+              .catch(function (error) {
+                console.log(error);
+            });
+          };
+
+          getLastArticles();
          
-      }, [lastArticles, allArticles]); 
+      }, [lastArticles, token]); 
+
+      useEffect(() => {
+
+          const getAllArticles = async () => {
+            let config = {
+                headers: {
+                  'Authorization': 'Bearer ' + token
+                }
+            }
+            await axios.get('http://localhost:3001/articles', config)
+              .then(function (response) {
+                  setAllArticles(response.data);
+    
+              })
+              .catch(function (error) {
+                console.log(error);
+            });
+          };
+
+          getAllArticles();
+         
+      }, [allArticles, token]); 
 
     const disconnect = () => {
         setToken(null);
@@ -86,7 +85,7 @@ const Home = () => {
         setEdit(true);
     }
 
-    const onPostArticle = () => {
+    const onPostArticle =  () => {
 
         let config = {
             headers: {
